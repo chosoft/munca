@@ -61,7 +61,7 @@ function registerUser(obj){
                         obj.password = hash
                         const user = new User(obj)
                         const saveResult = await user.save()
-                        resolve(saveResult._id)
+                        resolve({id:saveResult._id,email:saveResult.email})
                     })
                 } )
             }
@@ -70,7 +70,30 @@ function registerUser(obj){
         }
     })
 }
-
+function editValidMailField({registerId}){
+    return new Promise(async (resolve,reject) => {
+        try {
+            await User.findByIdAndUpdate(registerId,{validMail:true})
+            resolve('isValidMail')
+        } catch (e) {
+            reject({expected:false, message:e.message})
+        }
+    })
+}
+function deleteNotConfirmMails(ids){
+    return new Promise( async (resolve,reject) => {
+        try {
+            await ids.forEach(async ({registerId}) => {
+                await User.findByIdAndDelete(registerId)
+            })
+            resolve('unconfirmedMailsRemoved')
+        } catch (e) {
+            reject({expected:false, message:e.message})
+        }
+    })
+}
 module.exports = {
-    registerUser
+    registerUser,
+    editValidMailField,
+    deleteNotConfirmMails
 }

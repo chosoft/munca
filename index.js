@@ -3,6 +3,8 @@ const path = require('path');
 const helmet = require('helmet')
 const compresion = require('compresion');
 const session = require('express-session');
+const cron = require('node-cron');
+const tokensCleaner = require('./workers/mailVerification/cleanerExpiredTokens')
 const router = require('./routes/router');
 const envConfig = require('./config/envVars');
 const sessionConfig = require('./config/sessionVars');
@@ -27,3 +29,5 @@ router(app)
 const server = app.listen(envConfig.port || process.env.PORT, () => {
     console.log(`[SERVER] THE SERVER IS http://localhost:${server.address().port}/`)
 })
+
+tokensCleaner()

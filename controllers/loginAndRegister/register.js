@@ -1,5 +1,6 @@
 const objectValidator = require('./../../workers/loginAndRegister/registerObjectValidation')
 const encryptor = require('./../../workers/loginAndRegister/registerObjectEncryptor')
+const mailVerficationEmitter = require('./../../workers/loginAndRegister/registerEmailNotificator')
 const { registerUser } = require('../../models/users')
 const { generateVerificationToken } = require('../../models/conftokens')
 
@@ -10,7 +11,8 @@ function controller(body){
             const encryptResult = await encryptor(validatorResult)
             const registerResult =  await registerUser(encryptResult)
             const tokenGenerateResult = await generateVerificationToken(registerResult)
-            resolve(tokenGenerateResult)
+            const mailVerificationSenderResult = await mailVerficationEmitter(tokenGenerateResult)
+            resolve(mailVerificationSenderResult)
         } catch (e) {
             reject(e);
         }
