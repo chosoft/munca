@@ -4,8 +4,7 @@ const configSession = {
     name:'sessionId',
     secret:config.secret,
     resave:false,
-    saveUninitialized: true,
-    maxAge: 900000
+    saveUninitialized: false,
 }
 
 module.exports = configSession

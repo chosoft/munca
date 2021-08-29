@@ -4,7 +4,6 @@ const controller = require('./../../controllers/cleaner/checker')
 async function cleaner(){
     try {
         const controllerResult = await controller()
-        console.log('clean')
     } catch (e) {
         await writeErrorLog(e.message)
         delete e

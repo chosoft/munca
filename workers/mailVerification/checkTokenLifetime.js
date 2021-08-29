@@ -10,7 +10,7 @@ function checkValidLifetime({timestamp}){
             if(difference >= 60){
                 reject({expected: true,message:'tokenExpired'})
             }else{
-                resolve('validLifetime')
+                resolve()
             }
         } catch (e) {
             reject({expected:false, message:e.message});

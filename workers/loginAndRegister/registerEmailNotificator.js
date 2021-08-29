@@ -19,7 +19,7 @@ function sendVerificationToken({token,email}){
                 to: email,
                 subject: "Verification Mail",
                 //Edit the html 
-                html: `Verification <b>${token}</b>`
+                html: `<a href="http://localhost:9282/mailverification?token=${token}">Validar Mail</b>`
             })
             resolve('mailSend')
         } catch (e) {

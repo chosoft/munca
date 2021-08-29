@@ -92,8 +92,23 @@ function deleteNotConfirmMails(ids){
         }
     })
 }
+function searchUser(email){
+    return new Promise(async (resolve,reject) => {
+        try {
+            const userData = await User.findOne({email})
+            if(userData){
+                resolve(userData)
+            }else{
+                reject({expected:true, message:'emailNotRegister'})
+            }
+        } catch (e) {
+            reject({expected:false, message:e.message})
+        }
+    })
+}
 module.exports = {
     registerUser,
     editValidMailField,
-    deleteNotConfirmMails
+    deleteNotConfirmMails,
+    searchUser
 }

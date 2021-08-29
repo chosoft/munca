@@ -20,7 +20,7 @@ router.get('/', async (req,res) => {
             //Change the dot Send to render, in the frontend development
             res.send(e.message)
         }else{
-            const errorLog = await writeErrorLog(e.message)
+            await writeErrorLog(e.message)
             delete e
             res.send('error')
         }

@@ -21,7 +21,7 @@ router.post('/', bodyVerification,async (req, res) => {
         if(e.expected){
             res.send(e.message)
         }else{
-            const errorLog = await writeErrorLog(e.message)
+            await writeErrorLog(e.message)
             delete e
             res.send('error')
         }
