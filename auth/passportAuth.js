@@ -28,9 +28,7 @@ passport.use('userAuth',new LocalStrategy({
         return done(null,user)
     } catch (e) {
         if(e.expected){
-            console.log(e.message)
-            req.flash('loginMessage',e.message)
-            return done(null, false, req.flash('loginMessage'))
+            return done(null, false, req.flash('loginError',e.message))
         }else{
             await writeErrorLog(e.message)
             delete e

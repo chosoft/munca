@@ -1,18 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+
+const writeErrorLog = require('./../../workers/errors/writeErrorLog')
 //pendiente para el manejo de errores
 router.get('/', async (req,res) => {
     try {
-        res.send('here the html')
+        res.render('login',{error: req.flash('loginError')})
     } catch (e) {
-        res.send('error')
+        await writeErrorLog(e.message)
+        delete e
+        res.render('error')
     }
 })
 
-router.post('/', passport.authenticate('userAuth',{
+router.post('/', passport.authenticate('userAuth', 
+    {
+        successRedirect:'/',
+        failureRedirect:'/login',
+    }
+))
 
-    failureFlash:true,
-}))
 
 module.exports = router

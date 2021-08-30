@@ -26,8 +26,8 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.disabled('x-powered-by')
 
+app.disabled('x-powered-by')
 
 router(app)
 
