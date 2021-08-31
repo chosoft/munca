@@ -23,6 +23,17 @@ function getModelos(){
     })
 }
 
+function getModelo(nombre){
+    return new Promise(async (resolve,reject) => {
+        try {
+            const modelo = await Modelo.findOne({nombre})
+            resolve(modelo)
+        } catch (e) {
+            reject({expected:false,message:e.message})
+        }
+    })
+}
+
 function saveModelo(obj){
     return new Promise(async (resolve,reject) => {
         try {
@@ -57,6 +68,7 @@ function deleteModelo(modeloNombre){
 
 module.exports = {
     getModelos,
+    getModelo,
     saveModelo,
     deleteModelo
 }

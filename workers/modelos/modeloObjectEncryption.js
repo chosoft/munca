@@ -5,7 +5,7 @@ function encryptModelObject(obj){
     return new Promise(async (resolve, reject) => {
         try {
             let encryptObject = {
-                nombre: obj.nombre,
+                nombre: obj.nombre.trim().split(' ').join('-'),
                 colegio: encryptor.encrypt(obj.colegio),
                 addBy: encryptor.encrypt(obj.addBy),
                 address:{

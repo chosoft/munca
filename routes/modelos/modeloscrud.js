@@ -3,10 +3,27 @@ const router = express.Router()
 
 const controller = require('../../controllers/modelos/addModelos')
 const controllerDelete = require('../../controllers/modelos/deleteModelo')
+const controllerGet = require('./../../controllers/modelos/getModelos')
 
 const isAuthenticated = require('../../workers/loginAndRegister/loginAuthenticateFunction')
 const bodyVerification = require('../../middlewares/bodyVerification')
 const writeErrorLog = require('../../workers/errors/writeErrorLog')
+
+router.get('/',isAuthenticated, async (req,res) => {
+    try {
+        const modelos = await controllerGet()
+        res.render('home',{modelos})
+    } catch (e) {
+        if(e.expected){
+            res.send(e.message)
+        }else{
+            console.log(e)
+            await writeErrorLog(e.message)
+            delete e
+            res.send('error')
+        }
+    }
+})
 
 router.post('/', isAuthenticated,bodyVerification, async (req, res) => {
     try {

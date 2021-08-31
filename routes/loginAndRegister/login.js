@@ -16,7 +16,7 @@ router.get('/', async (req,res) => {
 
 router.post('/', passport.authenticate('userAuth', 
     {
-        successRedirect:'/',
+        successRedirect:'/modelos',
         failureRedirect:'/login',
     }
 ))
