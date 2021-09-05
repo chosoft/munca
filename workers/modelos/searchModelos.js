@@ -1,40 +1,29 @@
-function searchModelos(q,modelos){
+const { getModelos } = require('./../../models/modelos')
+
+function searchModelos(query){
     return new Promise(async (resolve,reject) => {
         try {
-            const splitQuery = q.split(' ')
+            const modelosToCheck = await getModelos()
             if(modelos.length <= 0){
-                reject({expected:true, message:'notResultsFound'})
+                reject({expected:true, message:'modelosNull'})
             }else{
-                await modelos.forEach(modelo => {
-
-                })
-            }   
+                const searchFunction = {
+                    "lider": searchLider(query)
+                }
+            }
         } catch (e) {
-            reject({expected:false, message:e.message})
+            reject(e)
         }
     })
 }
 
-function defineScore(query,string) {
+function searchLider(q,modelos){
     return new Promise(async (resolve,reject) => {
         try {
-            query = query.trim().split(' ')
-            string = string.replace(/,/g,'').split(' ')
-            let puntaje = 0
-            await query.forEach(async (q) => {
-                await string.forEach(async (word) => {
-                    if(q.toLowerCase() === word.toLowerCase()){
-                        puntaje++
-                    }else{
-
-                    }
-                })
-            })
-            resolve(puntaje)
+            
         } catch (e) {
-            reject({expected:false, message:e.message})
+            reject({expected:false, message: e.message})
         }
     })
 }
-
 module.exports = searchModelos

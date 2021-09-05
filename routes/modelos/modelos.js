@@ -4,6 +4,7 @@ const router = express.Router()
 const controller = require('./../../controllers/modelos/getOneModelo')
 const controllerSearch = require('./../../controllers/modelos/searchModel')
 const isAuthenticated = require('./../../workers/loginAndRegister/loginAuthenticateFunction')
+const bodyVerification = require('./../../middlewares/bodyVerification')
 
 const writeErrorLog = require('./../../workers/errors/writeErrorLog')
 
@@ -29,15 +30,10 @@ router.get('/:nombre',isAuthenticated, async (req,res) => {
     }
 })
 
-router.post('/',isAuthenticated,async (req,res) => {
+router.post('/',isAuthenticated, bodyVerification, async (req,res) => {
     try {
-        const searchQuery = req.query.q
-        if(searchQuery){
-            const searchResults = await controllerSearch(searchQuery)
-            res.send(searchResults)
-        }else{
-            res.send('nullQuery')
-        }
+        const query = req.body
+        const controllerResult = await controllerSearch(body)
     } catch (e) {
         if(e.expected){
             res.send(e.message)
